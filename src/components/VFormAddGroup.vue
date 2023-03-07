@@ -17,13 +17,6 @@
       />
     </div>
   </form>
-  <q-transition>
-    <div>
-      <teleport to="body">
-        <q-date v-model="date" />
-      </teleport>
-    </div>
-  </q-transition>
 </template>
 
 <script setup>
@@ -31,29 +24,17 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const { placeholderInput, labelInput, labelButton, type, group } = defineProps({
+const { placeholderInput, labelInput, labelButton } = defineProps({
   labelInput: String,
   labelButton: String,
   placeholderInput: String,
-  type: String,
-  group: Object,
 });
 const title = ref("");
 
 const addElement = () => {
   if (!title.value.trim()) return;
 
-  type === "group"
-    ? store.commit("todo/addTodoGroup", title.value)
-    : store.commit("todo/addTodoItem", {
-        group,
-        todo: {
-          title: title.value,
-          createDate: new Date(),
-          expirationDate: Date.now(),
-          done: false,
-        },
-      });
+  store.commit("todo/addTodoGroup", title.value);
 
   title.value = "";
 };

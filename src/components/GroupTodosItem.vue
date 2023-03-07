@@ -12,9 +12,8 @@
     <q-slide-transition>
       <div class="bckg-primary flex flex-center" v-show="showGroup">
         <div class="group-todo_content">
-          <VFormInputBtn
+          <VFormAddTodo
             class="bckg-white"
-            type="single"
             :group="group"
             label-input="Новая задача"
             label-button="Создать задачу"
@@ -36,7 +35,7 @@
 <script setup>
 import { ref } from "vue";
 import { useStore } from "vuex";
-import VFormInputBtn from "./VFormInputBtn.vue";
+import VFormAddTodo from "./VFormAddTodo.vue";
 import VTodosList from "../components/TodosList.vue";
 
 const { group } = defineProps({
