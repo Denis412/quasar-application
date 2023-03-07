@@ -1,10 +1,11 @@
 <template>
-  <div :class="{ done: todo.done }">
+  <q-item>
     <q-linear-progress
       size="1rem"
       :value="progress"
       color="green"
-      class="flex justify-between items-center q-mt-sm q-pa-xl todo-item_wrapper"
+      class="flex justify-between items-center todo-item_wrapper"
+      :class="{ done: todo.done }"
     >
       <div
         class="absolute flex items-center justify-between"
@@ -12,14 +13,19 @@
       >
         <p>{{ todo.title }}</p>
         <div>
-          <q-btn @click="toggleDoneTodo" color="secondary">&check;</q-btn>
-          <q-btn @click="deleteTodo" class="q-ml-sm" color="deep-orange"
-            >&cross;</q-btn
-          >
+          <q-btn @click="toggleDoneTodo" color="secondary" round icon="done" />
+          <q-btn
+            v-if="todo.done"
+            @click="deleteTodo"
+            class="q-ml-sm"
+            color="deep-orange"
+            round
+            icon="delete"
+          />
         </div>
       </div>
     </q-linear-progress>
-  </div>
+  </q-item>
 </template>
 
 <script setup>

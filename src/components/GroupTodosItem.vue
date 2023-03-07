@@ -15,12 +15,14 @@
       <div class="flex flex-center" v-show="showGroup">
         <div class="wp-100 group-todo_content">
           <VFormAddTodo :group="group" />
-          <VTodoItem
-            v-for="todo in group.childrens"
-            :key="todo"
-            :todo="todo"
-            :group="group"
-          />
+          <q-list>
+            <VTodoItem
+              v-for="todo in group.childrens"
+              :key="todo"
+              :todo="todo"
+              :group="group"
+            />
+          </q-list>
         </div>
       </div>
     </q-slide-transition>

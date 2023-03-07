@@ -3,13 +3,13 @@
     <div class="q-pa-md wp-100">
       <VFormAddGroup />
       <div class="flex flex-center">
-        <div class="wp-100">
+        <q-list class="wp-100">
           <VGroupTodosItem
             v-for="group in groups"
             :key="group.title"
             :group="group"
           />
-        </div>
+        </q-list>
       </div>
     </div>
   </q-page>
