@@ -1,5 +1,5 @@
 <template>
-  <form @submit="addElement">
+  <form @submit="toggleShowQDate()">
     <div class="flex flex-justify-between">
       <q-input
         class="flex-grow-2"
@@ -16,6 +16,19 @@
         class="ml-10"
       />
     </div>
+
+    <q-dialog
+      v-model="showQDate"
+      showQDate
+      transition-show="scale"
+      transition-hide="scale"
+    >
+      <div>
+        <q-date v-model="expirationDate">
+          <q-btn @click="toggleShowQDate">Ok</q-btn>
+        </q-date>
+      </div>
+    </q-dialog>
   </form>
 </template>
 
@@ -31,6 +44,17 @@ const { placeholderInput, labelInput, labelButton, group } = defineProps({
   group: Object,
 });
 const title = ref("");
+const expirationDate = ref(new Date());
+
+const showQDate = ref(false);
+
+const toggleShowQDate = () => {
+  showQDate.value = !showQDate.value;
+
+  if (showQDate.value === false) {
+    addElement();
+  }
+};
 
 const addElement = () => {
   if (!title.value.trim()) return;
@@ -40,7 +64,7 @@ const addElement = () => {
     todo: {
       title: title.value,
       createDate: new Date(),
-      expirationDate: Date.now(),
+      expirationDate: expirationDate.value,
       done: false,
     },
   });

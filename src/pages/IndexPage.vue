@@ -22,10 +22,13 @@
 <script setup>
 import VFormAddGroup from "../components/VFormAddGroup.vue";
 import VGroupTodosItem from "../components/GroupTodosItem.vue";
+import { VFormInputBtn } from "../HOC/VFormInputBtn";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const store = useStore();
+
+onMounted(() => VFormInputBtn());
 
 const groups = computed(() => store.getters["todo/groupTodos"]);
 </script>
