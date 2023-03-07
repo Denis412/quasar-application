@@ -1,19 +1,20 @@
 <template>
-  <form @submit="addElement">
-    <div class="flex flex-justify-between">
+  <form @submit="addTodoGroup">
+    <div class="flex">
       <q-input
         class="flex-grow-2"
         filled
         v-model="title"
-        :label="labelInput"
-        :placeholder="placeholderInput"
+        label="Новая группа"
+        placeholder="Введите название группы"
       />
+
       <q-btn
         push
         color="primary"
         type="submit"
-        :label="labelButton"
-        class="ml-10"
+        label="Создать группу"
+        class="q-ml-md"
       />
     </div>
   </form>
@@ -24,14 +25,9 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const { placeholderInput, labelInput, labelButton } = defineProps({
-  labelInput: String,
-  labelButton: String,
-  placeholderInput: String,
-});
 const title = ref("");
 
-const addElement = () => {
+const addTodoGroup = () => {
   if (!title.value.trim()) return;
 
   store.commit("todo/addTodoGroup", title.value);
@@ -43,13 +39,5 @@ const addElement = () => {
 <style>
 .flex-grow-2 {
   flex-grow: 2;
-}
-
-.ml-10 {
-  margin-left: 10px;
-}
-
-.flex-justify-between {
-  justify-content: space-between;
 }
 </style>

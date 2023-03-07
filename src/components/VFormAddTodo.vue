@@ -1,19 +1,20 @@
 <template>
   <form @submit="toggleShowQDate()">
-    <div class="flex flex-justify-between">
+    <div class="flex">
       <q-input
         class="flex-grow-2"
         filled
         v-model="title"
-        :label="labelInput"
-        :placeholder="placeholderInput"
+        label="Новая задача"
+        placeholder="Введите название задачи"
       />
+
       <q-btn
         push
         color="primary"
         type="submit"
-        :label="labelButton"
-        class="ml-10"
+        label="Создать задачу"
+        class="q-ml-sm"
       />
     </div>
 
@@ -24,7 +25,7 @@
       transition-hide="scale"
     >
       <div>
-        <q-date v-model="expirationDate">
+        <q-date v-model="expirationDate" :options="optionsFn">
           <q-btn @click="toggleShowQDate">Ok</q-btn>
         </q-date>
       </div>
@@ -35,28 +36,26 @@
 <script setup>
 import { ref } from "vue";
 import { useStore } from "vuex";
+import { date } from "quasar";
 
 const store = useStore();
-const { placeholderInput, labelInput, labelButton, group } = defineProps({
-  labelInput: String,
-  labelButton: String,
-  placeholderInput: String,
+const { group } = defineProps({
   group: Object,
 });
-const title = ref("");
-const expirationDate = ref(new Date());
 
+const title = ref("");
+const expirationDate = ref(date.formatDate(Date.now(), "YYYY/MM/DD"));
 const showQDate = ref(false);
+
+const optionsFn = (date) => new Date(date).getTime() > Date.now() - 86_400_000;
 
 const toggleShowQDate = () => {
   showQDate.value = !showQDate.value;
 
-  if (showQDate.value === false) {
-    addElement();
-  }
+  if (showQDate.value === false) addTodoItem();
 };
 
-const addElement = () => {
+const addTodoItem = () => {
   if (!title.value.trim()) return;
 
   store.commit("todo/addTodoItem", {

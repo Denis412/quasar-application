@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-16">
+  <div class="q-mt-md">
     <q-btn
       color="grey"
       square
@@ -7,25 +7,22 @@
       dense
       :icon="showGroup ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
       @click="toggleShowGroup"
-      >{{ showGroup ? "Скрыть" : "Показать" }} {{ group.title }}</q-btn
     >
+      {{ showGroup ? "Скрыть" : "Показать" }} {{ group.title }}
+    </q-btn>
+
     <q-slide-transition>
-      <div class="bckg-primary flex flex-center" v-show="showGroup">
-        <div class="group-todo_content">
-          <VFormAddTodo
-            class="bckg-white"
-            :group="group"
-            label-input="Новая задача"
-            label-button="Создать задачу"
-            placeholder-input="Введите название задачи"
-          />
-          <VTodosList
-            v-for="todo in group.childrens"
-            :key="todo"
-            :todo="todo"
-            @toggleDoneTodo="toggleDoneTodo({ group, todo })"
-            @deleteTodo="deleteTodo({ group, todo })"
-          />
+      <div class="flex flex-center" v-show="showGroup">
+        <div class="wp-100 group-todo_content">
+          <VFormAddTodo :group="group" />
+          <q-list>
+            <VTodoItem
+              v-for="todo in group.childrens"
+              :key="todo"
+              :todo="todo"
+              :group="group"
+            />
+          </q-list>
         </div>
       </div>
     </q-slide-transition>
@@ -34,9 +31,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { useStore } from "vuex";
 import VFormAddTodo from "./VFormAddTodo.vue";
-import VTodosList from "../components/TodosList.vue";
+import VTodoItem from "../components/TodoItem.vue";
 
 const { group } = defineProps({
   group: {
@@ -45,34 +41,15 @@ const { group } = defineProps({
   },
 });
 
-const store = useStore();
 const showGroup = ref(true);
 
 const toggleShowGroup = () => {
   showGroup.value = !showGroup.value;
 };
-
-const toggleDoneTodo = ({ group, todo }) =>
-  store.commit("todo/toggleDoneTodo", { group, todo });
-
-const deleteTodo = ({ group, todo }) =>
-  store.commit("todo/deleteTodo", { group, todo });
 </script>
 
 <style>
-.mt-16 {
-  margin-top: 1rem;
-}
-
 .group-todo_content {
-  width: 100%;
   max-width: 800px;
-}
-/* .bckg-primary {
-  background-color: var(--q-primary);
-} */
-
-.bckg-white {
-  background-color: #fff;
 }
 </style>

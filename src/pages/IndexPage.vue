@@ -1,19 +1,15 @@
 <template>
-  <q-page class="flex main_wrapper">
-    <div class="q-pa-md main_wrapper">
-      <VFormAddGroup
-        label-input="Новая группа"
-        label-button="Создать группу"
-        placeholder-input="Введите название группы"
-      />
+  <q-page class="flex">
+    <div class="q-pa-md wp-100">
+      <VFormAddGroup />
       <div class="flex flex-center">
-        <div class="group-todos_wrapper">
+        <q-list class="wp-100">
           <VGroupTodosItem
             v-for="group in groups"
             :key="group.title"
             :group="group"
           />
-        </div>
+        </q-list>
       </div>
     </div>
   </q-page>
@@ -22,23 +18,16 @@
 <script setup>
 import VFormAddGroup from "../components/VFormAddGroup.vue";
 import VGroupTodosItem from "../components/GroupTodosItem.vue";
-import { VFormInputBtn } from "../HOC/VFormInputBtn";
 import { useStore } from "vuex";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 
 const store = useStore();
-
-onMounted(() => VFormInputBtn());
 
 const groups = computed(() => store.getters["todo/groupTodos"]);
 </script>
 
 <style>
-.main_wrapper {
-  width: 100%;
-}
-
-.group-todos_wrapper {
+.wp-100 {
   width: 100%;
 }
 </style>
