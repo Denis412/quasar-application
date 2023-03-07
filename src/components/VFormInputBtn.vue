@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -42,6 +42,7 @@ const addElement = () => {
         group,
         todo: {
           title: title.value,
+          date: Date.now(),
           done: false,
         },
       });
