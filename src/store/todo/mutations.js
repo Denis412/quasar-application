@@ -1,3 +1,9 @@
+/* Helper functions */
+const findGroup = (groupsList, group) => {
+  return groupsList.find((group_item) => group_item.title === group.title);
+};
+
+/* Mutations */
 export function addTodoGroup(state, title) {
   state.todoGroupsList.push({
     title,
@@ -6,17 +12,13 @@ export function addTodoGroup(state, title) {
 }
 
 export function addTodoItem(state, { group, todo }) {
-  const groupTodos = state.todoGroupsList.find(
-    (group_item) => group_item.title === group.title
-  );
+  const groupTodos = findGroup(state.todoGroupsList, group);
 
   groupTodos.childrens.push(todo);
 }
 
 export function deleteTodo(state, { group, todo }) {
-  const groupTodos = state.todoGroupsList.find(
-    (group_item) => group_item.title === group.title
-  );
+  const groupTodos = findGroup(state.todoGroupsList, group);
 
   const todoIndex = groupTodos.childrens.findIndex(
     (todo_item) => todo_item.title === todo.title
@@ -26,9 +28,7 @@ export function deleteTodo(state, { group, todo }) {
 }
 
 export function toggleDoneTodo(state, { group, todo }) {
-  const groupTodos = state.todoGroupsList.find(
-    (group_item) => group_item.title === group.title
-  );
+  const groupTodos = findGroup(state.todoGroupsList, group);
 
   const findedTodo = groupTodos.childrens.find(
     (todo_item) => todo_item.title === todo.title

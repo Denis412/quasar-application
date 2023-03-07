@@ -11,13 +11,10 @@
 </template>
 
 <script setup>
-import { useStore } from "vuex";
-
 const { todo } = defineProps({
   todo: Object,
 });
 
-const store = useStore();
 const emit = defineEmits(["toggleDoneTodo", "deleteTodo"]);
 
 const toggleDoneTodo = () => emit("toggleDoneTodo");

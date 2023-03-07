@@ -1,8 +1,7 @@
 <template>
   <q-page class="flex main_wrapper">
     <div class="q-pa-md main_wrapper">
-      <VFormInputBtn
-        type="group"
+      <VFormAddGroup
         label-input="Новая группа"
         label-button="Создать группу"
         placeholder-input="Введите название группы"
@@ -21,12 +20,15 @@
 </template>
 
 <script setup>
-import VFormInputBtn from "../components/VFormInputBtn.vue";
+import VFormAddGroup from "../components/VFormAddGroup.vue";
 import VGroupTodosItem from "../components/GroupTodosItem.vue";
+import { VFormInputBtn } from "../HOC/VFormInputBtn";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const store = useStore();
+
+onMounted(() => VFormInputBtn());
 
 const groups = computed(() => store.getters["todo/groupTodos"]);
 </script>
