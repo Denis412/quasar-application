@@ -6,6 +6,10 @@ const routes = [
       { path: "", component: () => import("pages/IndexPage.vue") },
       { path: "/help", component: () => import("pages/HelpPage.vue") },
       { path: "/about", component: () => import("pages/AboutPage.vue") },
+      {
+        path: "/todos-completed",
+        component: () => import("pages/CompletedTodosPage.vue"),
+      },
     ],
   },
 
