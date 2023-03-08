@@ -1,7 +1,13 @@
 <template>
-  <q-page class="flex"> </q-page>
+  <q-page class="flex">{{ completedTodos }}</q-page>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from "vue";
+
+const store = useStore();
+
+const completedTodos = computed(() => store.getters["todo/completedTodos"]);
+</script>
 
 <style></style>

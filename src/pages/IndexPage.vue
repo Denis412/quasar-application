@@ -8,6 +8,7 @@
             v-for="group in groups"
             :key="group.title"
             :group="group"
+            :groupByDateTodos="groupByDateTodos"
           />
         </q-list>
       </div>
