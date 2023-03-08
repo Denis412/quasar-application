@@ -12,6 +12,7 @@
         style="right: 1rem; left: 1rem; color: black"
       >
         <p>{{ todo.title }}</p>
+        <p>Выполнить до {{ new Date(expirationTodoTime).toLocaleString() }}</p>
         <div>
           <q-btn @click="toggleDoneTodo" color="secondary" round icon="done" />
           <q-btn
@@ -37,8 +38,13 @@ const { todo, group } = defineProps({
   group: Object,
   todo: Object,
 });
-let timerId = 0;
+
 const progress = ref(0);
+const expirationTodoTime = ref(
+  new Date(todo.expirationDate).getTime() + 86_399_000
+);
+
+let timerId = 0;
 
 const toggleDoneTodo = () =>
   store.commit("todo/toggleDoneTodo", { group, todo });
@@ -46,7 +52,7 @@ const toggleDoneTodo = () =>
 const deleteTodo = () => store.commit("todo/deleteTodo", { group, todo });
 
 onMounted(() => {
-  if (Date.now() >= new Date(todo.expirationDate).getTime() + 86_400_000) {
+  if (Date.now() >= expirationTodoTime.value) {
     progress.value = 1;
     return;
   }
@@ -54,11 +60,10 @@ onMounted(() => {
   timerId = setInterval(() => {
     const currentTime = Date.now();
     const createTodoTime = todo.createDate.getTime();
-    const expirationTodoTime = new Date(todo.expirationDate).getTime();
 
     progress.value =
       (currentTime - createTodoTime) /
-      (expirationTodoTime + 86_400_000 - createTodoTime);
+      (expirationTodoTime.value - createTodoTime);
   }, 1000);
 });
 
