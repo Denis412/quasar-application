@@ -37,6 +37,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { date } from "quasar";
+import uuid4 from "uuid4";
 
 const store = useStore();
 const { group } = defineProps({
@@ -63,6 +64,7 @@ const addTodoItem = () => {
     todo: {
       title: title.value,
       createDate: new Date(),
+      completedDate: null,
       expirationDate: expirationDate.value,
       done: false,
     },

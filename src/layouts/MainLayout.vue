@@ -37,7 +37,15 @@
               <q-icon name="list" />
             </q-item-section>
 
-            <q-item-section> Todo </q-item-section>
+            <q-item-section> Задачи </q-item-section>
+          </q-item>
+
+          <q-item to="/todos-completed" exact clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="link" />
+            </q-item-section>
+
+            <q-item-section> Выполненные задачи </q-item-section>
           </q-item>
 
           <q-item to="/help" exact clickable v-ripple>
@@ -45,7 +53,7 @@
               <q-icon name="help" />
             </q-item-section>
 
-            <q-item-section> Help </q-item-section>
+            <q-item-section> Помощь </q-item-section>
           </q-item>
 
           <q-item to="/about" exact clickable v-ripple>
@@ -53,7 +61,7 @@
               <q-icon name="link" />
             </q-item-section>
 
-            <q-item-section> About </q-item-section>
+            <q-item-section> О сайте </q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
