@@ -32,6 +32,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
 import { useStore } from "vuex";
+import { useTimer } from "../use/useTimer";
 
 const store = useStore();
 const { todo, group } = defineProps({
@@ -39,36 +40,25 @@ const { todo, group } = defineProps({
   todo: Object,
 });
 
-const progress = ref(0);
 const expirationTodoTime = ref(
-  new Date(todo.expirationDate).getTime() + 86_399_000
+  new Date(todo.expirationDate).getTime() + 40_000_000
 );
 
-let timerId = 0;
+const { progress, startTimer, stopTimer } = useTimer(
+  todo.createDate.getTime(),
+  expirationTodoTime.value
+);
 
-const toggleDoneTodo = () =>
+const toggleDoneTodo = () => {
   store.commit("todo/toggleDoneTodo", { group, todo });
+
+  todo.done ? stopTimer() : startTimer();
+};
 
 const deleteTodo = () => store.commit("todo/deleteTodo", { group, todo });
 
-onMounted(() => {
-  if (Date.now() >= expirationTodoTime.value) {
-    progress.value = 1;
-    return;
-  }
-
-  timerId = setInterval(() => {
-    const currentTime = Date.now();
-    const createTodoTime = todo.createDate.getTime();
-
-    progress.value = !todo.done
-      ? (currentTime - createTodoTime) /
-        (expirationTodoTime.value - createTodoTime)
-      : progress.value;
-  }, 1000);
-});
-
-onUnmounted(() => clearInterval(timerId));
+onMounted(() => startTimer());
+onUnmounted(() => stopTimer());
 </script>
 
 <style lang="scss">
