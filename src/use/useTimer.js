@@ -1,13 +1,13 @@
 import { ref } from "vue";
 
 export function useTimer(createTodoTime, expirationTodoTime) {
-  const timerId = ref(0);
+  let timerId = 0;
   const progress = ref(0);
 
   return {
     progress,
     startTimer: () => {
-      timerId.value = setInterval(() => {
+      timerId = setInterval(() => {
         const currentTime = Date.now();
 
         progress.value =
@@ -16,8 +16,8 @@ export function useTimer(createTodoTime, expirationTodoTime) {
       }, 1000);
     },
     stopTimer: () => {
-      clearInterval(timerId.value);
-      timerId.value = 0;
+      clearInterval(timerId);
+      timerId = 0;
     },
   };
 }
