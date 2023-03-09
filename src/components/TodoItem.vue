@@ -45,7 +45,7 @@ const expirationTodoTime = ref(
 );
 
 const { progress, startTimer, stopTimer } = useTimer(
-  todo.createDate.getTime(),
+  new Date(todo.createDate).getTime(),
   expirationTodoTime.value
 );
 

@@ -19,11 +19,13 @@
 import VFormAddGroup from "../components/VFormAddGroup.vue";
 import VGroupTodosItem from "../components/GroupTodosItem.vue";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const store = useStore();
 
 const groups = computed(() => store.getters["todo/groupTodos"]);
+
+onMounted(() => store.dispatch("todo/FETCH_TODOS"));
 </script>
 
 <style>
