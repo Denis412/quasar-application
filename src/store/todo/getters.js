@@ -3,5 +3,8 @@ export function groupTodos(state) {
 }
 
 export function completedTodos(state) {
-  return state.todoGroupsList.childrens.fitler((todo) => todo.done);
+  return state.todoGroupsList.reduce((arr, group) => {
+    arr.push(...group.childrens.filter((todo) => todo.done));
+    return arr;
+  }, []);
 }

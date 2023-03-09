@@ -61,9 +61,10 @@ onMounted(() => {
     const currentTime = Date.now();
     const createTodoTime = todo.createDate.getTime();
 
-    progress.value =
-      (currentTime - createTodoTime) /
-      (expirationTodoTime.value - createTodoTime);
+    progress.value = !todo.done
+      ? (currentTime - createTodoTime) /
+        (expirationTodoTime.value - createTodoTime)
+      : progress.value;
   }, 1000);
 });
 
