@@ -30,11 +30,13 @@
 </template>
 
 <script setup>
+import { useQuasar } from "quasar";
 import { onMounted, onUnmounted, ref } from "vue";
 import { useStore } from "vuex";
 import { useTimer } from "../use/useTimer";
 
 const store = useStore();
+const $q = useQuasar();
 const { todo, group } = defineProps({
   group: Object,
   todo: Object,
@@ -55,7 +57,21 @@ const toggleDoneTodo = () => {
   todo.done ? stopTimer() : startTimer();
 };
 
-const deleteTodo = () => store.commit("todo/deleteTodo", { group, todo });
+const deleteTodo = () => {
+  $q.dialog({
+    title: "Подтвердите действие",
+    message: "Вы действительно хотите удалить задачу?",
+    cancel: true,
+    persistent: true,
+  }).onOk(() => {
+    store.commit("todo/deleteTodo", { group, todo });
+
+    $q.notify({
+      message: "Задача удалена!",
+      type: "positive",
+    });
+  });
+};
 
 onMounted(() => startTimer());
 onUnmounted(() => stopTimer());

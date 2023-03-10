@@ -17,6 +17,12 @@ export function deleteTodo(_, { group, todo }) {
   if (todoIndex !== -1) group.childrens.splice(todoIndex, 1);
 }
 
+export function deleteGroup(state, group) {
+  state.todoGroupsList = state.todoGroupsList.filter(
+    (group_item) => group_item.title !== group.title
+  );
+}
+
 export function toggleDoneTodo(_, { group, todo }) {
   const findedTodo = group.childrens.find(
     (todo_item) => todo_item.createDate === todo.createDate
