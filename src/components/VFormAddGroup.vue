@@ -30,7 +30,13 @@ const $q = useQuasar();
 const title = ref("");
 
 const addTodoGroup = () => {
-  if (!title.value.trim()) return;
+  if (!title.value.trim()) {
+    $q.notify({
+      message: "Вы не ввели данные для создания новой группы!",
+      type: "negative",
+    });
+    return;
+  }
 
   store.commit("todo/addTodoGroup", title.value);
 

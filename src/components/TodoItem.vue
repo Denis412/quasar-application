@@ -42,9 +42,7 @@ const { todo, group } = defineProps({
   todo: Object,
 });
 
-const expirationTodoTime = ref(
-  new Date(todo.expirationDate).getTime() + 40_000_000
-);
+const expirationTodoTime = ref(new Date(todo.expirationDate).getTime());
 
 const { progress, startTimer, stopTimer } = useTimer(
   todo.createDate.getTime(),
