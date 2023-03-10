@@ -12,6 +12,13 @@
             />
           </transition-group>
         </q-list>
+        <transition name="fade">
+          <div v-if="!groups.length" class="absolute-center">
+            <div class="text-h4 text-primary text-cetner">
+              Список задач пуст!
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
   </q-page>
@@ -31,6 +38,16 @@ const groups = computed(() => store.getters["todo/groupTodos"]);
 <style>
 .wp-100 {
   width: 100%;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
 }
 
 .slide-enter-from,
