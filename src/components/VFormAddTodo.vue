@@ -77,7 +77,7 @@ const addTodoItem = () => {
   });
 
   $q.notify({
-    message: "Задача добавлена!",
+    message: "Задача успешно добавлена!",
     type: "positive",
   });
 

@@ -21,16 +21,23 @@
 </template>
 
 <script setup>
+import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
+const $q = useQuasar();
 const title = ref("");
 
 const addTodoGroup = () => {
   if (!title.value.trim()) return;
 
   store.commit("todo/addTodoGroup", title.value);
+
+  $q.notify({
+    message: "Группа успешно добавлена!",
+    type: "positive",
+  });
 
   title.value = "";
 };
