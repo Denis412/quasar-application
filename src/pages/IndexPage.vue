@@ -4,11 +4,13 @@
       <VFormAddGroup />
       <div class="flex flex-center">
         <q-list class="wp-100">
-          <VGroupTodosItem
-            v-for="group in groups"
-            :key="group.title"
-            :group="group"
-          />
+          <transition-group name="slide">
+            <VGroupTodosItem
+              v-for="group in groups"
+              :key="group.title"
+              :group="group"
+            />
+          </transition-group>
         </q-list>
       </div>
     </div>
@@ -29,5 +31,16 @@ const groups = computed(() => store.getters["todo/groupTodos"]);
 <style>
 .wp-100 {
   width: 100%;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.8s ease;
 }
 </style>

@@ -36,10 +36,10 @@
 <script setup>
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { date } from "quasar";
-import uuid4 from "uuid4";
+import { date, useQuasar } from "quasar";
 
 const store = useStore();
+const $q = useQuasar();
 const { group } = defineProps({
   group: Object,
 });
@@ -57,7 +57,13 @@ const toggleShowQDate = () => {
 };
 
 const addTodoItem = () => {
-  if (!title.value.trim()) return;
+  if (!title.value.trim()) {
+    $q.notify({
+      message: "Текст задачи пусть! Вернитесь и проверьте введенные данные!",
+      type: "negative",
+    });
+    return;
+  }
 
   store.commit("todo/addTodoItem", {
     group,
@@ -68,6 +74,11 @@ const addTodoItem = () => {
       expirationDate: expirationDate.value,
       done: false,
     },
+  });
+
+  $q.notify({
+    message: "Задача добавлена!",
+    type: "positive",
   });
 
   title.value = "";
