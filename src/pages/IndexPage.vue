@@ -29,8 +29,10 @@ import VFormAddGroup from "../components/VFormAddGroup.vue";
 import VGroupTodosItem from "../components/GroupTodosItem.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { useQuasar } from "quasar";
 
 const store = useStore();
+const $q = useQuasar();
 
 const groups = computed(() => store.getters["todo/groupTodos"]);
 </script>

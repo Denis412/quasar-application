@@ -2,7 +2,7 @@
   <form @submit="toggleShowQDate()">
     <div class="flex">
       <q-input
-        class="flex-grow-2"
+        class="flex-grow-2 bg-white"
         filled
         v-model="title"
         label="Новая задача"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { date, useQuasar } from "quasar";
 
@@ -49,6 +49,12 @@ const expirationDate = ref(date.formatDate(Date.now(), "YYYY/MM/DD"));
 const showQDate = ref(false);
 
 const optionsFn = (date) => new Date(date).getTime() > Date.now() - 86_400_000;
+
+const expirationDateToNumber = computed(() => {
+  const fromExpiration = new Date(expirationDate.value);
+
+  return fromExpiration.setTime(fromExpiration.getTime() + 86_399_000);
+});
 
 const toggleShowQDate = () => {
   showQDate.value = !showQDate.value;
@@ -71,7 +77,7 @@ const addTodoItem = () => {
       title: title.value,
       createDate: new Date(),
       completedDate: null,
-      expirationDate: expirationDate.value,
+      expirationDate: expirationDateToNumber.value,
       done: false,
     },
   });
